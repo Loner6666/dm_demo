@@ -2,15 +2,88 @@
 
 -- 达梦数据库语法：字段名称都用""；from后的表名称用 【模式名称】.【表名称】；并且都用""；字符串用''
 
+-- 查询 select
 select * from "temtest"."user_info";
 
+select "id" , "name" , "age" from "temtest"."user_info";
+-- 别名
 select "id" 编号 , "name" as 名字 , "age" from "temtest"."user_info";
 
+-- 插入 insert
 insert into "temtest"."user_info" ("name" , "age") values ('小丑巴基' , 35);
 
+-- 修改 update
 update "temtest"."user_info" set "age" = 38 where "id" = 10;
 
+-- 删除 delete
 delete from "temtest"."user_info" where "id" = 11;
+
+
+--  ----------------------------------------------------------  以下为函数
+-- 查询当前时间
+SELECT CURDATE() ,curtime();
+
+-- 排序	order by
+select * from "temtest"."user_info" order by "age" desc;
+
+-- 计数	count
+select count("id") 总条数 from "temtest"."user_info";
+
+-- 去重	distinct
+select distinct("age") from "temtest"."user_info";
+
+-- 最大值	max
+select max("age") from "temtest"."user_info";
+
+select * from "temtest"."user_info" where "age" =(select max("age") from "temtest"."user_info");
+
+-- 最小值	min
+select min("age") from "temtest"."user_info";
+
+-- 平均数 avg
+select avg("age") 平均年龄 from "temtest"."user_info";
+
+-- 分组	group by 	;		NTILE (3) OVER(ORDER BY "age")
+select "id" , "name" , "age" , NTILE (3) OVER(ORDER BY "age") from "temtest"."user_info";
+
+select "age",COUNT("id") from "temtest"."user_info" group by "age";
+
+-- 情况表达式
+select case when (c1,c2) in (select c1,c2 from t2) then 1 else 0 end from t1;
+
+-- 分页 limit
+select * from "temtest"."user_info" limit 2 , 2 ;
+
+-- -------------------------------------------	判空
+
+-- IFNULL(n1,n2)	当n1为非空时，返回n1；若n1为空，则返回n2	；ifnull(n1,n2)	n1,n2数据类型可以不同
+select "id" , "name" , ifnull("age",'暂时无数据') from "temtest"."user_info";
+
+-- ISNULL(n1,n2)	当n1为非空时，返回n1；若n1为空，则返回n2	;isnull(n1,n2)	n1,n2数据类型必须一致
+select "id" , "name" , isnull("age",0) from "temtest"."user_info";
+
+-- nullif(n1,n2)	如果n1=n2返回NULL，否则返回n1
+select "id" , "name" , nullif("age",17) from "temtest"."user_info";
+
+-- nvl(n1,n2)	返回第一个非空的值
+select "id" , "name" , nvl("age",0) from "temtest"."user_info";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
