@@ -2,6 +2,7 @@ package com.example.dmdemo.control;
 
 import com.alibaba.fastjson.JSON;
 import com.example.dmdemo.bean.UserInfo;
+import com.example.dmdemo.common.ResultObject;
 import com.example.dmdemo.service.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +32,16 @@ public class UserInfoController {
     }
 
     @GetMapping("/getAll")
-    public List<UserInfo> getAll() {
-        List<UserInfo> userInfoList = null;
-        log.info("UserInfoController.getAll————》start");
+    public ResultObject getAll() {
         try {
-            userInfoList = this.userInfoService.getAll();
+            log.info("UserInfoController.getAll————》start");
+            List<UserInfo> userInfoList = this.userInfoService.getAll();
+            log.info("UserInfoCotroller.getAll————》end【{}】", JSON.toJSONString(userInfoList));
+            return ResultObject.successData(userInfoList, "查询成功！");
         } catch (Exception e) {
             log.error("UserInfoController.getAll————》error【{}，{}】", e.getMessage(), e);
+            return ResultObject.successMsg("查询失败！");
         }
-        log.info("UserInfoController.getAll————》end【{}】", JSON.toJSONString(userInfoList));
-        return userInfoList;
     }
 
 }

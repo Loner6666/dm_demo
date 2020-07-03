@@ -1,0 +1,17 @@
+
+
+-- 达梦数据库语法：字段名称都用""；from后的表名称用 【模式名称】.【表名称】；并且都用""；字符串用''
+
+select * from "temtest"."user_info";
+
+select "id" 编号 , "name" as 名字 , "age" from "temtest"."user_info";
+
+insert into "temtest"."user_info" ("name" , "age") values ('小丑巴基' , 35);
+
+update "temtest"."user_info" set "age" = 38 where "id" = 10;
+
+delete from "temtest"."user_info" where "id" = 11;
+
+
+
+
