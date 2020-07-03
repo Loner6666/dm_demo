@@ -11,7 +11,11 @@
     </sql>
 
     <select id="getAll" resultMap="BaseResultMap">
-        select "id","name","age" from "temtest"."user_info";
+        select "id","name","age" from "temtest"."user_info"
+    </select>
+
+    <select id="getUserInfoPage" resultMap="BaseResultMap" parameterType="com.example.dmdemo.vo.UserInfoVo">
+        select "id","name","age" from "temtest"."user_info"
     </select>
 
 </mapper>

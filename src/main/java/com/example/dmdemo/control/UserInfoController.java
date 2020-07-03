@@ -4,12 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.example.dmdemo.bean.UserInfo;
 import com.example.dmdemo.common.ResultObject;
 import com.example.dmdemo.service.UserInfoService;
+import com.example.dmdemo.vo.UserInfoVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,6 +39,19 @@ public class UserInfoController {
         } catch (Exception e) {
             log.error("UserInfoController.getAll————》error【{}，{}】", e.getMessage(), e);
             return ResultObject.successMsg("查询失败！");
+        }
+    }
+
+    @PostMapping(value = "/getUserInfoPage")
+    public ResultObject getUserInfoPage(@RequestBody UserInfoVo request) {
+        try {
+            log.info("分页查询 UserInfoController.getUserInfoPage，start————>{}", JSON.toJSONString(request));
+            ResultObject responseData = this.userInfoService.getUserInfoPage(request);
+            log.info("分页查询 UserInfoController.getUserInfoPage，end————>{}", JSON.toJSONString(responseData));
+            return responseData;
+        } catch (Exception e) {
+            log.error("分页查询 UserInfoController.getUserInfoPage，error————>[{},{}]", e.getMessage(), e);
+            return ResultObject.error("查询失败！");
         }
     }
 
