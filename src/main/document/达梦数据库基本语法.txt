@@ -15,6 +15,8 @@ insert into "temtest"."user_info" ("name" , "age") values ('小丑巴基' , 35);
 -- 修改 update
 update "temtest"."user_info" set "age" = 38 where "id" = 10;
 
+update "temtest"."user_info" set "name" = 'test' , "age" = 38 where "id" = 10;
+
 -- 删除 delete
 delete from "temtest"."user_info" where "id" = 11;
 

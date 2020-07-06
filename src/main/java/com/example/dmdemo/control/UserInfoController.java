@@ -29,16 +29,22 @@ public class UserInfoController {
         return "Springboot 测试达梦数据库！";
     }
 
-    @GetMapping("/getAll")
-    public ResultObject getAll() {
+    /**
+     * URL: http://localhost:8080/user.html
+     *
+     * @return
+     */
+    @PostMapping("/getAll")
+    public List<UserInfo> getAll() {
+        List<UserInfo> userInfoList = null;
         try {
             log.info("UserInfoController.getAll————》start");
-            List<UserInfo> userInfoList = this.userInfoService.getAll();
+            userInfoList = this.userInfoService.getAll();
             log.info("UserInfoCotroller.getAll————》end【{}】", JSON.toJSONString(userInfoList));
-            return ResultObject.successData(userInfoList, "查询成功！");
+            return userInfoList;
         } catch (Exception e) {
             log.error("UserInfoController.getAll————》error【{}，{}】", e.getMessage(), e);
-            return ResultObject.successMsg("查询失败！");
+            return userInfoList;
         }
     }
 
