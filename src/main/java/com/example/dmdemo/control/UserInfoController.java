@@ -30,6 +30,24 @@ public class UserInfoController {
     }
 
     /**
+     * http://localhost:8080/index.html
+     *
+     * @return
+     */
+    @GetMapping("/getAll")
+    public ResultObject getAll1() {
+        try {
+            log.info("UserInfoController.getAll————》start");
+            List<UserInfo> userInfoList = this.userInfoService.getAll();
+            log.info("UserInfoCotroller.getAll————》end【{}】", JSON.toJSONString(userInfoList));
+            return ResultObject.successData(userInfoList, "查询成功！");
+        } catch (Exception e) {
+            log.error("UserInfoController.getAll————》error【{}，{}】", e.getMessage(), e);
+            return ResultObject.successMsg("查询失败！");
+        }
+    }
+
+    /**
      * URL: http://localhost:8080/user.html
      *
      * @return
