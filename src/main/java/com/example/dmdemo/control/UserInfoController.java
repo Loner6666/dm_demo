@@ -79,4 +79,16 @@ public class UserInfoController {
         }
     }
 
+    /**
+     * 根据id查询UserInfo
+     * URL: http://localhost:8080/user/1
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/user/{id}")
+    public ResultObject getUserById(@PathVariable Long id) {
+        return this.userInfoService.selectByPrimaryKey(id);
+    }
+
 }

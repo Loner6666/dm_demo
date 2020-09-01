@@ -11,4 +11,6 @@ public interface UserInfoMapper {
 
     List<UserInfoVo> getUserInfoPage(UserInfoVo userInfoVo);
 
+    UserInfo selectByPrimaryKey(Long id);
+
 }

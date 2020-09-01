@@ -17,4 +17,6 @@ public interface UserInfoService {
 
     ResultObject getUserInfoPage(UserInfoVo request) throws Exception;
 
+    ResultObject selectByPrimaryKey(Long id);
+
 }
