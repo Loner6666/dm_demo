@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -43,7 +45,7 @@ public class UserInfoController {
             return ResultObject.successData(userInfoList, "查询成功！");
         } catch (Exception e) {
             log.error("UserInfoController.getAll————》error【{}，{}】", e.getMessage(), e);
-            return ResultObject.successMsg("查询失败！");
+            return ResultObject.error("查询失败！");
         }
     }
 
@@ -89,6 +91,18 @@ public class UserInfoController {
     @GetMapping(value = "/user/{id}")
     public ResultObject getUserById(@PathVariable Long id) {
         return this.userInfoService.selectByPrimaryKey(id);
+    }
+
+    /**
+     * 导出Excel
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    @GetMapping("/export")
+    public ResultObject export(HttpServletRequest request, HttpServletResponse response) {
+        return this.userInfoService.export(request, response);
     }
 
 }

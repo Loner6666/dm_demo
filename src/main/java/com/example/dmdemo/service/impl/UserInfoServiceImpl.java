@@ -1,5 +1,6 @@
 package com.example.dmdemo.service.impl;
 
+import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.fastjson.JSON;
 import com.example.dmdemo.bean.UserInfo;
 import com.example.dmdemo.common.ResultObject;
@@ -13,6 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -65,6 +70,26 @@ public class UserInfoServiceImpl implements UserInfoService {
         } catch (Exception e) {
             log.error("根据id查询UserInfo，error————>[{},{}]", e.getMessage(), e);
             return ResultObject.error("查询失败！");
+        }
+    }
+
+    @Override
+    public ResultObject export(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            //获取数据
+            log.info("导出Excel开始，获取数据————》");
+            List<UserInfo> userInfoList = this.userInfoMapper.getAll();
+            log.info("导出Excel的数据为：{}", JSON.toJSONString(userInfoList));
+            String fileName = new String("海贼王人物信息表.xlsx".getBytes(), "ISO-8859-1");
+            response.addHeader("Content-Disposition", "filename=" + fileName);
+            ServletOutputStream out = response.getOutputStream();
+            // 写出 Excel 文件
+            EasyExcelFactory.write(out, UserInfo.class).sheet("UserInfo数据").doWrite(userInfoList);
+            log.info("Excel导出成功！");
+            return ResultObject.successMsg("导出成功！");
+        } catch (IOException e) {
+            log.error("Excel导出失败！");
+            return ResultObject.error("导出失败！");
         }
     }
 
